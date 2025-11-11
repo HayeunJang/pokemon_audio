@@ -6,11 +6,11 @@
   <title>Pokémon Name</title>
 
   <!-- jsPsych -->
-  <link rel="stylesheet" href="https://unpkg.com/jspsych@8.0.0/css/jspsych.css">
-  <script src="https://unpkg.com/jspsych@8.0.0"></script>
-  <script src="https://unpkg.com/@jspsych/plugin-preload@2.0.0"></script>
-  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.0.0"></script>
-  <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.0.0"></script>
+  <link rel="stylesheet" href="https://unpkg.com/jspsych@8.0.0/dist/css/jspsych.css">
+  <script src="https://unpkg.com/jspsych@8.0.0/dist/jspsych.js"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-preload@2.0.0/dist/index.umd.js"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.0.0/dist/index.umd.js"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.0.0/dist/index.umd.js"></script>
 
   <style>
     body { margin:0; padding:20px; font-family: Arial, sans-serif; }
@@ -162,8 +162,9 @@
   const twoAFC_trial = {
     type: jsPsychHtmlButtonResponse,
     stimulus: function() {
-      const type = jsPsych.timelineVariable('target_type');
-      const q = `어떤 이름이 <strong>${type}-type Pokémon</strong>에 더 어울리나요?`;
+      const tt = jsPsych.timelineVariable('target_type');
+      const targetText = String(tt);
+      const q = `어떤 이름이 <strong>${targetText}-type Pokémon</strong>에 더 어울리나요?`;
       const file = jsPsych.timelineVariable('file');
       return `
         <div class="row">
@@ -341,5 +342,6 @@
 </script>
 </body>
 </html>
+
 
 
