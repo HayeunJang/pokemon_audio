@@ -101,7 +101,7 @@
     const chosen = pickRandom(["AB", "BA"]);
     return {
       id: t.id,
-      file: `./audio/${t.prefix}${chosen}.wav`,
+      audio_path: `./audio/${t.prefix}${chosen}.wav`,
       nameA: String(t.nameA),
       nameB: String(t.nameB),
       target_type: String(t.target_type),
@@ -143,7 +143,7 @@ STIMULI.forEach(s => {
   /* ===== PRELOAD ===== */
   const preload = {
     type: jsPsychPreload,
-    audio: STIMULI.map(s => s.file),
+    audio: STIMULI.map(s => s.audio_path),
     images: [TYPE_GUIDE_IMG],
   };
 
@@ -173,6 +173,7 @@ STIMULI.forEach(s => {
     type: jsPsychHtmlButtonResponse,
     stimulus: function() {
       const targetText = jsPsych.timelineVariable('target_type');
+      const audioPath = jsPsych.timelineVariable('audio_path');
       const q = `어떤 이름이 <strong>${targetText}-type Pokémon</strong>에 더 어울리나요?`;
       const file = jsPsych.timelineVariable('file');
       return `
@@ -181,7 +182,7 @@ STIMULI.forEach(s => {
             <div class="prompt">${q}</div>
             <div class="audio-wrap">
               <audio id="stimAudio" controls preload="auto">
-                <source src="${file}" type="audio/wav"/>
+                <source src="${audioPath}" type="audio/wav"/>
                 브라우저가 오디오를 지원하지 않습니다.
               </audio>
               <div class="wait-note">${TEXTS.listenFirst}</div>
@@ -196,8 +197,8 @@ STIMULI.forEach(s => {
     },
     // 버튼 라벨(좌/우) 무작위
     choices: () => {
-      const A = jsPsych.timelineVariable('nameA');
-      const B = jsPsych.timelineVariable('nameB');
+      const A = String(jsPsych.timelineVariable('nameA'));
+      const B = String(jsPsych.timelineVariable('nameB'));
       lastChoiceOrder = Math.random() < 0.5 ? [A, B] : [B, A];
       return lastChoiceOrder;
     },
@@ -211,13 +212,6 @@ STIMULI.forEach(s => {
       const btns = document.querySelectorAll('button.jspsych-btn');
       btns.forEach(b => { b.disabled = true; b.classList.add('disabled-btn'); });
 
-      const audio = document.getElementById('stimAudio');
-if (audio) {
-  audio.addEventListener('error', () => {
-    console.error('Audio load error:', audio.error, 'src=', audio.currentSrc);
-    alert('오디오 파일을 불러오지 못했습니다. 콘솔(Network 탭)을 확인하세요.');
-  }, { once: true });
-}
       // 오디오 끝나면 버튼 해제
       const audio = document.getElementById('stimAudio');
       if (audio) {
@@ -358,6 +352,7 @@ if (audio) {
 </script>
 </body>
 </html>
+
 
 
 
