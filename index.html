@@ -190,7 +190,6 @@
   };
 
   /* ===== 2AFC TRIAL ===== */
-  let lastChoiceOrder = null;         // 본 trial에서 버튼 라벨의 좌우 순서를 저장
   let currentTrialStartTime = null;   // trial 시작 시각
 
   const twoAFC_trial = {
@@ -199,16 +198,11 @@
       const data = jsPsych.evaluateTimelineVariable('target_type');
       return jsPsych.timelineVariable('stimulus_html');
     },
-    // 버튼 라벨(좌/우) 무작위
-    choices: function() {
-      const A = jsPsych.evaluateTimelineVariable('nameA');
-      const B = jsPsych.evaluateTimelineVariable('nameB');
-      lastChoiceOrder = Math.random() < 0.5 ? [A, B] : [B, A];
-      return lastChoiceOrder;
-    },
+    // 버튼 라벨: 오디오 순서 그대로 (첫 번째 이름, 두 번째 이름)
+    choices: ['첫 번째 이름', '두 번째 이름'],
     response_allowed_while_playing: true, // 보이긴 하지만 on_load에서 잠금
     button_html: (choice, i) =>
-      `<button class="jspsych-btn disabled-btn" data-btn-index="${i}" disabled>${String(choice)}</button>`,
+      `<button class="jspsych-btn disabled-btn" data-btn-index="${i}" disabled>${choice}</button>`,
     on_load: () => {
       currentTrialStartTime = new Date().toISOString();
 
@@ -226,18 +220,21 @@
       }
     },
     on_finish: (data) => {
-      const chosenIndex = data.response; // 0 or 1
-      const chosenName = lastChoiceOrder?.[chosenIndex] ?? null;
-      const otherName  = lastChoiceOrder?.[chosenIndex === 0 ? 1 : 0] ?? null;
+      const chosenIndex = data.response; // 0 = 첫 번째 이름, 1 = 두 번째 이름
+      const nameA = jsPsych.evaluateTimelineVariable('nameA');
+      const nameB = jsPsych.evaluateTimelineVariable('nameB');
+      
+      const chosenName = chosenIndex === 0 ? nameA : nameB;
+      const otherName = chosenIndex === 0 ? nameB : nameA;
 
       data.task            = '2afc';
       data.target_type     = jsPsych.evaluateTimelineVariable('target_type');
       data.audio_file      = jsPsych.evaluateTimelineVariable('audio_path');
-      data.nameA           = jsPsych.evaluateTimelineVariable('nameA');
-      data.nameB           = jsPsych.evaluateTimelineVariable('nameB');
+      data.nameA           = nameA;
+      data.nameB           = nameB;
       data.trial_id        = jsPsych.evaluateTimelineVariable('id');
       data.chosen_version  = jsPsych.evaluateTimelineVariable('chosen_version');
-      data.choice_order    = lastChoiceOrder ? [...lastChoiceOrder] : [];
+      data.choice_order    = ['첫 번째 이름', '두 번째 이름']; // 고정 순서
       data.chosen_name     = chosenName;
       data.other_name      = otherName;
       data.trial_start_time= currentTrialStartTime;
