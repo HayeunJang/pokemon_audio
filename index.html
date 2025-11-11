@@ -40,7 +40,7 @@
    ******************************************************/
 
   /* ===== CONFIG ===== */
-  const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzLyfSUNhNnDCUzCfTU6LDQ2cObxodbCr642O8VEvhd8cO_igyjM_QGgfjE7UyYmx2LKg/exec'; 
+  const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxuULDNxTtj-ehjYcnw-e7mlNnytOFUqTTxlJN9T6FB-hKkiIWQXMlCkfshtSmKvfm7jg/exec'; 
   const TYPE_GUIDE_IMG = 'img/type_guide.png';  
 
   /* ===== TEXTS ===== */
@@ -339,19 +339,15 @@
 
       console.log('Uploading data:', rows);
       
-      // 한 번의 요청으로 모든 데이터 전송
-      const response = await fetch(GAS_ENDPOINT, {
+      // no-cors 모드로 전송 (CORS 에러 회피)
+      await fetch(GAS_ENDPOINT, {
         method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data: rows }) // data 키로 배열 전송
+        body: JSON.stringify({ data: rows })
       });
 
-      if (!response.ok) {
-        console.error('Upload failed with status:', response.status);
-        return false;
-      }
-      
-      console.log('Upload successful! Check your Google Sheet.');
+      console.log('Upload attempted. Check your Google Sheet.');
       return true;
     } catch (e) {
       console.error('Upload error:', e);
@@ -361,4 +357,3 @@
 </script>
 </body>
 </html>
-
