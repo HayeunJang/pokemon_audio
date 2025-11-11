@@ -203,7 +203,7 @@ STIMULI.forEach(s => {
     },
     response_allowed_while_playing: true, // 보이긴 하지만 on_load에서 잠금
     button_html: (choice, i) =>
-      `<button class="jspsych-btn disabled-btn" data-btn-index="${i}" disabled>${choice}</button>`,
+      `<button class="jspsych-btn disabled-btn" data-btn-index="${i}" disabled>${String(choice)}</button>`,
     on_load: () => {
       currentTrialStartTime = new Date().toISOString();
 
@@ -211,6 +211,13 @@ STIMULI.forEach(s => {
       const btns = document.querySelectorAll('button.jspsych-btn');
       btns.forEach(b => { b.disabled = true; b.classList.add('disabled-btn'); });
 
+      const audio = document.getElementById('stimAudio');
+if (audio) {
+  audio.addEventListener('error', () => {
+    console.error('Audio load error:', audio.error, 'src=', audio.currentSrc);
+    alert('오디오 파일을 불러오지 못했습니다. 콘솔(Network 탭)을 확인하세요.');
+  }, { once: true });
+}
       // 오디오 끝나면 버튼 해제
       const audio = document.getElementById('stimAudio');
       if (audio) {
@@ -351,6 +358,7 @@ STIMULI.forEach(s => {
 </script>
 </body>
 </html>
+
 
 
 
