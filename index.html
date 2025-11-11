@@ -40,7 +40,7 @@
    ******************************************************/
 
   /* ===== CONFIG ===== */
-  const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzBKKcE4iZn7-D7Nvv2KHdKBmGccB0XlfQDT0NfA9EfVpOLltmNVaidWKaMeM8-qbXjRA/exec'; 
+  const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzVaMGOoMVXFuUyu8pN-yXW-r-QmpBuLmsB__UacNEZsVZSiys6Yh4fgsNWr5ShcPtRsg/exec'; 
   const TYPE_GUIDE_IMG = 'img/type_guide.png';  
 
   /* ===== TEXTS ===== */
@@ -71,7 +71,7 @@
     { id: "01", prefix: "01_", nameA: "Silshin",  nameB: "Tiltin",   target_type: "Flying"  },
     // { id: "02", prefix: "02_", nameA: "Salshim",  nameB: "Taltim",  target_type: "Flying"   },
     // { id: "03", prefix: "03_", nameA: "Sulshur",   nameB: "Tulkur",  target_type: "Flying" },
-   //  { id: "04", prefix: "04_", nameA: "Surshum",    nameB: "Turkum",   target_type: "Flying" },
+    // { id: "04", prefix: "04_", nameA: "Surshum",    nameB: "Turkum",   target_type: "Flying" },
     // { id: "05", prefix: "05_", nameA: "Shieshen",  nameB: "Kieten",   target_type: "Flying"  },
     // { id: "06", prefix: "06_", nameA: "Shilsun",  nameB: "Kiltun",  target_type: "Flying"   },
     // { id: "07", prefix: "07_", nameA: "Shalshick",   nameB: "Kaltick",  target_type: "Flying" },
@@ -81,17 +81,17 @@
     // { id: "11", prefix: "11_", nameA: "Drinzlin",   nameB: "Trinslin",  target_type: "Dark" },
     // { id: "12", prefix: "12_", nameA: "Dramblum",    nameB: "Tramplum",   target_type: "Dark" },
     // { id: "13", prefix: "13_", nameA: "Grimblin",  nameB: "Krimplin",   target_type: "Dark"  },
-   //  { id: "14", prefix: "14_", nameA: "Grenzlin",  nameB: "Krenslin",  target_type: "Dark"   },
-   //  { id: "15", prefix: "15_", nameA: "Zegdum",   nameB: "Sektum",  target_type: "Dark" },
+    // { id: "14", prefix: "14_", nameA: "Grenzlin",  nameB: "Krenslin",  target_type: "Dark"   },
+    // { id: "15", prefix: "15_", nameA: "Zegdum",   nameB: "Sektum",  target_type: "Dark" },
     { id: "16", prefix: "16_", nameA: "Zumgul",    nameB: "Sumkul",   target_type: "Dark" },
     { id: "17", prefix: "17_", nameA: "Peepol",   nameB: "Teetol",  target_type: "Fairy" },
-   //  { id: "18", prefix: "18_", nameA: "Polpen",    nameB: "Tolken",   target_type: "Fairy" },
-   //  { id: "19", prefix: "19_", nameA: "Pafpil",  nameB: "Tastil",   target_type: "Fairy"  },
-   //  { id: "20", prefix: "20_", nameA: "Pimpock",  nameB: "Tintock",  target_type: "Fairy"   },
-   //  { id: "21", prefix: "21_", nameA: "Paapair",   nameB: "Kaakair",  target_type: "Fairy" },
-   //  { id: "22", prefix: "22_", nameA: "Pupmir",    nameB: "Kukmir",   target_type: "Fairy" },
-   //  { id: "23", prefix: "23_", nameA: "Pepmil",   nameB: "Kekmil",  target_type: "Fairy" },
-   //  { id: "24", prefix: "24_", nameA: "Parpil",    nameB: "Karkil",   target_type: "Fairy" },
+    // { id: "18", prefix: "18_", nameA: "Polpen",    nameB: "Tolken",   target_type: "Fairy" },
+    // { id: "19", prefix: "19_", nameA: "Pafpil",  nameB: "Tastil",   target_type: "Fairy"  },
+    // { id: "20", prefix: "20_", nameA: "Pimpock",  nameB: "Tintock",  target_type: "Fairy"   },
+    // { id: "21", prefix: "21_", nameA: "Paapair",   nameB: "Kaakair",  target_type: "Fairy" },
+    // { id: "22", prefix: "22_", nameA: "Pupmir",    nameB: "Kukmir",   target_type: "Fairy" },
+    // { id: "23", prefix: "23_", nameA: "Pepmil",   nameB: "Kekmil",  target_type: "Fairy" },
+    // { id: "24", prefix: "24_", nameA: "Parpil",    nameB: "Karkil",   target_type: "Fairy" },
   ];
 
   function pickRandom(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
@@ -226,9 +226,20 @@
       const chosenIndex = data.response; // 0 = 첫 번째 이름, 1 = 두 번째 이름
       const nameA = jsPsych.evaluateTimelineVariable('nameA');
       const nameB = jsPsych.evaluateTimelineVariable('nameB');
+      const chosenVersion = jsPsych.evaluateTimelineVariable('chosen_version'); // 'AB' or 'BA'
       
-      const chosenName = chosenIndex === 0 ? nameA : nameB;
-      const otherName = chosenIndex === 0 ? nameB : nameA;
+      // chosen_version에 따라 실제 선택된 이름 결정
+      let chosenName, otherName;
+      
+      if (chosenVersion === 'AB') {
+        // AB 버전: 첫 번째=A, 두 번째=B
+        chosenName = chosenIndex === 0 ? nameA : nameB;
+        otherName = chosenIndex === 0 ? nameB : nameA;
+      } else {
+        // BA 버전: 첫 번째=B, 두 번째=A
+        chosenName = chosenIndex === 0 ? nameB : nameA;
+        otherName = chosenIndex === 0 ? nameA : nameB;
+      }
 
       data.task            = '2afc';
       data.target_type     = jsPsych.evaluateTimelineVariable('target_type');
@@ -236,8 +247,9 @@
       data.nameA           = nameA;
       data.nameB           = nameB;
       data.trial_id        = jsPsych.evaluateTimelineVariable('id');
-      data.chosen_version  = jsPsych.evaluateTimelineVariable('chosen_version');
+      data.chosen_version  = chosenVersion;
       data.choice_order    = ['첫 번째 이름', '두 번째 이름']; // 고정 순서
+      data.button_response = chosenIndex === 0 ? '첫 번째 이름' : '두 번째 이름'; // 버튼 선택
       data.chosen_name     = chosenName;
       data.trial_start_time= currentTrialStartTime;
       data.response_time   = new Date().toISOString();
@@ -331,6 +343,7 @@
             nameA:            rest.nameA,
             nameB:            rest.nameB,
             choice_order:     JSON.stringify(rest.choice_order || []),
+            button_response:  rest.button_response || '',
             chosen_name:      rest.chosen_name || '',
             time_elapsed:     rest.time_elapsed,
             trial_start_time: rest.trial_start_time || '',
