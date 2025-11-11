@@ -101,14 +101,22 @@
     const chosen = pickRandom(["AB", "BA"]);
     return {
       id: t.id,
-      file: `audio/${t.prefix}${chosen}.wav`,
-      nameA: t.nameA,
-      nameB: t.nameB,
-      target_type: t.target_type,
+      file: './audio/${t.prefix}${chosen}.wav',
+      nameA: String(t.nameA),
+      nameB: String(t.nameB),
+      target_type: String(t.target_type),
       chosen_version: chosen   // 분석 시 사용
     };
   });
 
+  // 진단: 오디오 파일 접근 가능 여부 로그
+STIMULI.forEach(s => {
+  fetch(s.file, { method: 'HEAD' })
+    .then(r => console.log(`[CHECK] ${s.file} -> ${r.status}`))
+    .catch(e => console.warn(`[CHECK] ${s.file} fetch error`, e));
+});
+
+  
   /* ===== INIT ===== */
   let jsPsych = initJsPsych({
     display_element: 'jspsych-target',
@@ -129,6 +137,8 @@
       }
     }
   });
+
+  
 
   /* ===== PRELOAD ===== */
   const preload = {
@@ -162,9 +172,8 @@
   const twoAFC_trial = {
     type: jsPsychHtmlButtonResponse,
     stimulus: function() {
-      const tt = jsPsych.timelineVariable('target_type');
-      const targetText = String(tt);
-      const q = `어떤 이름이 <strong>${targetText}-type Pokémon</strong>에 더 어울리나요?`;
+      const targetText = jsPsych.timelineVariable('target_type');
+      const q = '어떤 이름이 <strong>${targetText}-type Pokémon</strong>에 더 어울리나요?';
       const file = jsPsych.timelineVariable('file');
       return `
         <div class="row">
@@ -342,6 +351,7 @@
 </script>
 </body>
 </html>
+
 
 
 
