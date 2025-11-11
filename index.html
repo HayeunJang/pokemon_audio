@@ -337,16 +337,24 @@
           };
         });
 
-      await fetch(GAS_ENDPOINT, {
+      console.log('Uploading data:', rows);
+      
+      // 한 번의 요청으로 모든 데이터 전송
+      const response = await fetch(GAS_ENDPOINT, {
         method: 'POST',
-        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(rows)
+        body: JSON.stringify({ data: rows }) // data 키로 배열 전송
       });
-      console.log('Upload attempted. Check your Google Sheet.');
+
+      if (!response.ok) {
+        console.error('Upload failed with status:', response.status);
+        return false;
+      }
+      
+      console.log('Upload successful! Check your Google Sheet.');
       return true;
     } catch (e) {
-      console.warn('Upload error:', e);
+      console.error('Upload error:', e);
       return false;
     }
   }
