@@ -110,11 +110,11 @@
   });
 
   // 진단: 오디오 파일 접근 가능 여부 로그
-STIMULI.forEach(s => {
-  fetch(s.file, { method: 'HEAD' })
-    .then(r => console.log(`[CHECK] ${s.file} -> ${r.status}`))
-    .catch(e => console.warn(`[CHECK] ${s.file} fetch error`, e));
-});
+  STIMULI.forEach(s => {
+    fetch(s.audio_path, { method: 'HEAD' })
+      .then(r => console.log(`[CHECK] ${s.audio_path} -> ${r.status}`))
+      .catch(e => console.warn(`[CHECK] ${s.audio_path} fetch error`, e));
+  });
 
   
   /* ===== INIT ===== */
@@ -175,7 +175,6 @@ STIMULI.forEach(s => {
       const targetText = jsPsych.timelineVariable('target_type');
       const audioPath = jsPsych.timelineVariable('audio_path');
       const q = `어떤 이름이 <strong>${targetText}-type Pokémon</strong>에 더 어울리나요?`;
-      const file = jsPsych.timelineVariable('file');
       return `
         <div class="row">
           <div class="col">
@@ -228,7 +227,7 @@ STIMULI.forEach(s => {
 
       data.task            = '2afc';
       data.target_type     = jsPsych.timelineVariable('target_type');
-      data.audio_file      = jsPsych.timelineVariable('file');
+      data.audio_file      = jsPsych.timelineVariable('audio_path');
       data.nameA           = jsPsych.timelineVariable('nameA');
       data.nameB           = jsPsych.timelineVariable('nameB');
       data.trial_id        = jsPsych.timelineVariable('id');
@@ -352,11 +351,3 @@ STIMULI.forEach(s => {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
