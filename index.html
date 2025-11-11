@@ -101,7 +101,7 @@
     const chosen = pickRandom(["AB", "BA"]);
     return {
       id: t.id,
-      file: './audio/${t.prefix}${chosen}.wav',
+      file: `./audio/${t.prefix}${chosen}.wav`,
       nameA: String(t.nameA),
       nameB: String(t.nameB),
       target_type: String(t.target_type),
@@ -173,7 +173,7 @@ STIMULI.forEach(s => {
     type: jsPsychHtmlButtonResponse,
     stimulus: function() {
       const targetText = jsPsych.timelineVariable('target_type');
-      const q = '어떤 이름이 <strong>${targetText}-type Pokémon</strong>에 더 어울리나요?';
+      const q = `어떤 이름이 <strong>${targetText}-type Pokémon</strong>에 더 어울리나요?`;
       const file = jsPsych.timelineVariable('file');
       return `
         <div class="row">
@@ -351,6 +351,7 @@ STIMULI.forEach(s => {
 </script>
 </body>
 </html>
+
 
 
 
