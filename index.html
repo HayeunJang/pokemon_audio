@@ -58,9 +58,9 @@
     `,
     startBtn: '시작',
     listenFirst: '오디오를 끝까지 들어야 버튼이 활성화됩니다.',
-    endTitle: '참여해 주셔서 감사합니다!',
-    endBody: '데이터 업로드를 시도했습니다. 만약 아래에 CSV 다운로드 버튼이 나타나면, 파일을 다운로드하여 실험자에게 보내주세요.',
-    finishBtn: '종료'
+    endTitle: '실험이 완료되었습니다!',
+    endBody: '아래 "종료" 버튼을 눌러 데이터를 업로드하세요.<br>업로드 후 백업용 CSV 다운로드 링크가 나타납니다.',
+    finishBtn: '종료 (데이터 업로드)'
   };
 
   /* ===== BASE TRIALS =====
@@ -69,29 +69,29 @@
    */
   const BASE_TRIALS = [
     { id: "01", prefix: "01_", nameA: "Silshin",  nameB: "Tiltin",   target_type: "Flying"  },
-    // { id: "02", prefix: "02_", nameA: "Salshim",  nameB: "Taltim",  target_type: "Flying"   },
-    // { id: "03", prefix: "03_", nameA: "Sulshur",   nameB: "Tulkur",  target_type: "Flying" },
-    // { id: "04", prefix: "04_", nameA: "Surshum",    nameB: "Turkum",   target_type: "Flying" },
-    // { id: "05", prefix: "05_", nameA: "Shieshen",  nameB: "Kieten",   target_type: "Flying"  },
-    // { id: "06", prefix: "06_", nameA: "Shilsun",  nameB: "Kiltun",  target_type: "Flying"   },
-    // { id: "07", prefix: "07_", nameA: "Shalshick",   nameB: "Kaltick",  target_type: "Flying" },
-    // { id: "08", prefix: "08_", nameA: "Shelshim",    nameB: "Kelkim",   target_type: "Flying" },
-    // { id: "09", prefix: "09_", nameA: "Bringlin",  nameB: "Prinklin",   target_type: "Dark"  },
-    // { id: "10", prefix: "10_", nameA: "Branzlam",  nameB: "Pranslam",  target_type: "Dark"   },
-    // { id: "11", prefix: "11_", nameA: "Drinzlin",   nameB: "Trinslin",  target_type: "Dark" },
-    // { id: "12", prefix: "12_", nameA: "Dramblum",    nameB: "Tramplum",   target_type: "Dark" },
-    // { id: "13", prefix: "13_", nameA: "Grimblin",  nameB: "Krimplin",   target_type: "Dark"  },
-    // { id: "14", prefix: "14_", nameA: "Grenzlin",  nameB: "Krenslin",  target_type: "Dark"   },
-    // { id: "15", prefix: "15_", nameA: "Zegdum",   nameB: "Sektum",  target_type: "Dark" },
+    { id: "02", prefix: "02_", nameA: "Salshim",  nameB: "Taltim",  target_type: "Flying"   },
+    { id: "03", prefix: "03_", nameA: "Sulshur",   nameB: "Tulkur",  target_type: "Flying" },
+    { id: "04", prefix: "04_", nameA: "Surshum",    nameB: "Turkum",   target_type: "Flying" },
+    { id: "05", prefix: "05_", nameA: "Shieshen",  nameB: "Kieten",   target_type: "Flying"  },
+    { id: "06", prefix: "06_", nameA: "Shilsun",  nameB: "Kiltun",  target_type: "Flying"   },
+    { id: "07", prefix: "07_", nameA: "Shalshick",   nameB: "Kaltick",  target_type: "Flying" },
+    { id: "08", prefix: "08_", nameA: "Shelshim",    nameB: "Kelkim",   target_type: "Flying" },
+    { id: "09", prefix: "09_", nameA: "Bringlin",  nameB: "Prinklin",   target_type: "Dark"  },
+    { id: "10", prefix: "10_", nameA: "Branzlam",  nameB: "Pranslam",  target_type: "Dark"   },
+    { id: "11", prefix: "11_", nameA: "Drinzlin",   nameB: "Trinslin",  target_type: "Dark" },
+    { id: "12", prefix: "12_", nameA: "Dramblum",    nameB: "Tramplum",   target_type: "Dark" },
+    { id: "13", prefix: "13_", nameA: "Grimblin",  nameB: "Krimplin",   target_type: "Dark"  },
+    { id: "14", prefix: "14_", nameA: "Grenzlin",  nameB: "Krenslin",  target_type: "Dark"   },
+    { id: "15", prefix: "15_", nameA: "Zegdum",   nameB: "Sektum",  target_type: "Dark" },
     { id: "16", prefix: "16_", nameA: "Zumgul",    nameB: "Sumkul",   target_type: "Dark" },
     { id: "17", prefix: "17_", nameA: "Peepol",   nameB: "Teetol",  target_type: "Fairy" },
-    // { id: "18", prefix: "18_", nameA: "Polpen",    nameB: "Tolken",   target_type: "Fairy" },
-    // { id: "19", prefix: "19_", nameA: "Pafpil",  nameB: "Tastil",   target_type: "Fairy"  },
-    // { id: "20", prefix: "20_", nameA: "Pimpock",  nameB: "Tintock",  target_type: "Fairy"   },
-    // { id: "21", prefix: "21_", nameA: "Paapair",   nameB: "Kaakair",  target_type: "Fairy" },
-    // { id: "22", prefix: "22_", nameA: "Pupmir",    nameB: "Kukmir",   target_type: "Fairy" },
-    // { id: "23", prefix: "23_", nameA: "Pepmil",   nameB: "Kekmil",  target_type: "Fairy" },
-    // { id: "24", prefix: "24_", nameA: "Parpil",    nameB: "Karkil",   target_type: "Fairy" },
+    { id: "18", prefix: "18_", nameA: "Polpen",    nameB: "Tolken",   target_type: "Fairy" },
+    { id: "19", prefix: "19_", nameA: "Pafpil",  nameB: "Tastil",   target_type: "Fairy"  },
+    { id: "20", prefix: "20_", nameA: "Pimpock",  nameB: "Tintock",  target_type: "Fairy"   },
+    { id: "21", prefix: "21_", nameA: "Paapair",   nameB: "Kaakair",  target_type: "Fairy" },
+    { id: "22", prefix: "22_", nameA: "Pupmir",    nameB: "Kukmir",   target_type: "Fairy" },
+    { id: "23", prefix: "23_", nameA: "Pepmil",   nameB: "Kekmil",  target_type: "Fairy" },
+    { id: "24", prefix: "24_", nameA: "Parpil",    nameB: "Karkil",   target_type: "Fairy" },
   ];
 
   function pickRandom(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
@@ -145,23 +145,43 @@
   let jsPsych = initJsPsych({
     display_element: 'jspsych-target',
     on_finish: async () => {
-      // 백업용 CSV 다운로드 버튼 먼저 생성
+      console.log('실험 종료 - 데이터 업로드 중...');
+      
+      // Google Sheets 업로드 시도
+      await uploadAllRowsToGoogle();
+      
+      // 감사 메시지 표시
+      const target = document.getElementById('jspsych-target');
+      target.innerHTML = `
+        <div style="text-align: center; padding: 40px;">
+          <h2>참여해 주셔서 감사합니다!</h2>
+          <p style="font-size: 16px; margin: 20px 0;">데이터 업로드가 완료되었습니다.</p>
+          <p style="font-size: 14px; color: #666;">
+            이제 창을 닫으셔도 됩니다.
+          </p>
+        </div>
+      `;
+      
+      // 백업용 CSV 다운로드 버튼 생성 (선택사항)
       const csv = jsPsych.data.get().csv();
       const blob = new Blob([csv], { type: 'text/csv' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `pokemon_data_${new Date().getTime()}.csv`;
-      a.textContent = 'CSV 다운로드 (백업용)';
+      a.textContent = '📥 백업 파일 다운로드 (선택)';
       a.style.display = 'block';
       a.style.margin = '20px auto';
+      a.style.padding = '10px 20px';
       a.style.textAlign = 'center';
-      a.style.fontSize = '16px';
-      a.style.color = '#0066cc';
+      a.style.fontSize = '14px';
+      a.style.color = '#666';
+      a.style.backgroundColor = '#f5f5f5';
+      a.style.textDecoration = 'none';
+      a.style.borderRadius = '6px';
+      a.style.border = '1px solid #ddd';
+      a.style.width = 'fit-content';
       document.body.appendChild(a);
-      
-      // Google Sheets 업로드 시도 (백그라운드)
-      uploadAllRowsToGoogle();
     }
   });
 
@@ -251,6 +271,7 @@
       data.choice_order    = ['첫 번째 이름', '두 번째 이름']; // 고정 순서
       data.button_response = chosenIndex === 0 ? '첫 번째 이름' : '두 번째 이름'; // 버튼 선택
       data.chosen_name     = chosenName;
+      data.other_name      = otherName;
       data.trial_start_time= currentTrialStartTime;
       data.response_time   = new Date().toISOString();
       data.user_agent      = navigator.userAgent;
@@ -345,6 +366,7 @@
             choice_order:     JSON.stringify(rest.choice_order || []),
             button_response:  rest.button_response || '',
             chosen_name:      rest.chosen_name || '',
+            other_name:       rest.other_name || '',
             time_elapsed:     rest.time_elapsed,
             trial_start_time: rest.trial_start_time || '',
             response_time:    rest.response_time || '',
